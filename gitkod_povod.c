@@ -63,7 +63,7 @@ count++;
 return count;
 }
 
-void replaceEOL(char *str)
+void replaceEOL(char *str) //Vymení koniec riadka za koniec reťazca
 {
 unsigned int i;
 
@@ -312,9 +312,9 @@ float *field = NULL;
 int fieldSize = 0;
 char cmd;
 
-while((cmd = getchar()) != 'k')
+while((cmd = getchar()) != 'k') //Číta zo štandardného vstupu po písmenách kým nenačíta K
 {
-switch(cmd)
+switch(cmd) //Porovnáva načítané písmeno
 {
 case 'v':
 getchar();
@@ -344,8 +344,8 @@ break;
 
 }
 
-if(fr != NULL)
-closeFile(fr);
+if(fr != NULL) //Ak bol súbor otvorený
+closeFile(fr); //Zatvorí ho
 
 return 1;
 }
