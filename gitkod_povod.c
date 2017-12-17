@@ -65,93 +65,94 @@ int getVowelCount(char *str)
 
 void replaceEOL(char *str)
 {
-unsigned int i;
+	unsigned int i;
 
-for(i = 0; i < strlen(str); i++)
-{
-if(str[i] == '\n')
-{
-str[i] = '\0';
-break;
-}
-}
+	for(i = 0; i < strlen(str); i++)
+	{
+		if(str[i] == '\n')
+		{
+			str[i] = '\0';
+			break;
+		}
+	}
 }
 
 FILE *funkciaV(FILE *fr)
 {
-char nazov[32], organizator[32];
-int deti, datum;
-float cena, cas;
+	char nazov[32], organizator[32];
+	int deti, datum;
+	float cena, cas;
 
-if(fr == NULL)
-{
-if((fr = openFile(fr)) == NULL)
-{
-return NULL;
-}
-}
+	if(fr == NULL)
+	{
+		if((fr = openFile(fr)) == NULL)
+		{
+			return NULL;
+		}
+	}
 
-while((fgets(nazov, 32, fr)) != NULL)
-{
-fgets(organizator, 32, fr);
-fscanf(fr, "%d\n", &deti);
-fscanf(fr, "%g\n", &cena);
-fscanf(fr, "%d\n", &datum);
-fscanf(fr, "%g\n", &cas);
+	while((fgets(nazov, 32, fr)) != NULL)
+	{
+		fgets(organizator, 32, fr);
+		fscanf(fr, "%d\n", &deti);
+		fscanf(fr, "%g\n", &cena);
+		fscanf(fr, "%d\n", &datum);
+		fscanf(fr, "%g\n", &cas);
 
-printf("nazov: %s", nazov);
-printf("organizator: %s", organizator);
-printf("pre deti: %d\n", deti);
-printf("cena: %.2f\n", cena);
-printf("datum: %08d\n", datum);
-printf("cas: %.2f\n\n", cas);
-}
 
-rewind(fr);
+		printf("nazov: %s", nazov);
+		printf("organizator: %s", organizator);
+		printf("pre deti: %d\n", deti);
+		printf("cena: %.2f\n", cena);
+		printf("datum: %08d\n", datum);
+		printf("cas: %.2f\n\n", cas);
+	}
 
-return fr;
+	rewind(fr);
+
+	return fr;
 }
 
 void funkciaC(FILE *fr)
 {
-char pom[32];
-int deti, rok, maxrok = 0;
-float cas, maxcas = 0.0;
+	char pom[32];
+	int deti, rok, maxrok = 0;
+	float cas, maxcas = 0.0;
 
-if(fr == NULL)
-{
-return;
-}
+	if(fr == NULL)
+	{
+		return;
+	}
 
 
-while((fgets(pom, 32, fr)) != NULL)
-{
-fgets(pom, 32, fr);
-fscanf(fr, "%d\n", &deti);
-fgets(pom, 32, fr);
-fscanf(fr, "%d\n", &rok);
-fscanf(fr, "%g\n", &cas);
+	while((fgets(pom, 32, fr)) != NULL)
+	{
+		fgets(pom, 32, fr);
+		fscanf(fr, "%d\n", &deti);
+		fgets(pom, 32, fr);
+		fscanf(fr, "%d\n", &rok);
+		fscanf(fr, "%g\n", &cas);
 
-if(deti)
-{
-rok %= 10000;
+		if(deti)
+		{
+			rok %= 10000;
 
-if(rok > maxrok)
-{
-maxrok = rok;
-maxcas = cas;
-}
-else if(rok == maxrok && cas > maxcas)
-{
-maxcas = cas;
-}
-}
-}
+			if(rok > maxrok)
+			{
+				maxrok = rok;
+				maxcas = cas;
+			}
+			else if(rok == maxrok && cas > maxcas)
+			{
+				maxcas = cas;
+			}
+		}
+	}
 
-if(maxrok != 0)
-printf("%.2f\n", maxcas);
+    if(maxrok != 0)
+        printf("%.2f\n", maxcas);
 
-rewind(fr);
+	rewind(fr);
 }
 
 int funkciaE(FILE *fr, float **field)
