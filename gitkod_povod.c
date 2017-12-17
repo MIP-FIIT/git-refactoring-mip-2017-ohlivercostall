@@ -4,66 +4,64 @@
 
 FILE *openFile(FILE *fr)
 {
-	if((fr = fopen("podujatia.txt", "r")) == NULL)
-	{
-		printf("Neotvoreny subor\n");
-		return NULL;
-	}
-	return fr;
+  if((fr = fopen("podujatia.txt", "r")) == NULL) //Ak súbor existuje tak ho otvorí
+  {
+      printf("Neotvoreny subor\n"); //Inak vypíše chybnú správu
+      return NULL; 
+   }
+   return fr; //Inak vráti pointer na súbor
 }
 
 void closeFile(FILE *fr)
 {
-	if(fclose(fr) == EOF)
-	{
-		printf("Nezatvoreny subor\n");
-		exit(1);
-	}
+  if(fclose(fr) == EOF) //Ak sa súbor nezatvoril správne
+  {
+    printf("Nezatvoreny subor\n"); //Vypíše chybovú hlášku
+    exit(1); //Ukonèí program
+  }
 }
 
-int getRecordsNumber(FILE *fr)
+int getRecordsNumber(FILE *fr) //Zistí počet záznamov
 {
 	char pom[32];
 	int count = 0;
 
-	while((fgets(pom, 32, fr)) != NULL)
-	{
-		count++;
-	}
+  while((fgets(pom, 32, fr)) != NULL) //Číta riadky zo súboru po jednom
+  {
+    count++; //Pripočíta
+  }
 
-	rewind(fr);
+  rewind(fr); //Pretočí súbor na začiatok
 
-	return ++count / 7;
+  return ++count / 7; //Pripočíta 1 aby zarátal posledný riadok a vráti počet záznamov (jeden záznam má 7 riadkov)
 }
 
-int getNumberLength(int num)
+int getNumberLength(int num) //Zistí dĺžku čísla
 {
 	int count = 0;
 
-	while(num > 0)
-	{
-		num /= 10;
-		count++;
-	}
-
+  while(num > 0) //Kým je číslo väčšie ako 0
+  {
+    num /= 10; //Vydelí 10 a tým pádom odstráni posledný rád
+    count++; //Pripočíta
+  }
 	return count;
 }
 
-int getVowelCount(char *str)
+int getVowelCount(char *str) //Zistí počet samohlások
 {
 	unsigned int i, count = 0;
-
-	for(i = 0; i < strlen(str); i++)
-	{
-
-		if(str[i] == 'a' || str[i] == 'e' || str[i] == 'i' || str[i] == 'o' || str[i] == 'u' || str[i] == 'y' || str[i] == 'A' || str[i] == 'E' || str[i] == 'I' || str[i] == 'O' || str[i] == 'U' || str[i] == 'Y')
-			count++;
-	}
-
+  
+  for(i = 0; i < strlen(str); i++) //Prechádza reťazec
+  {
+  //Každý znak porovná či je to samohláska
+  if(str[i] == 'a' || str[i] == 'e' || str[i] == 'i' || str[i] == 'o' || str[i] == 'u' || str[i] == 'y' || str[i] == 'A' || str[i] == 'E' || str[i] == 'I' || str[i] == 'O' || str[i] == 'U' || str[i] == 'Y')
+    count++;
+  }
 	return count;
 }
 
-void replaceEOL(char *str)
+void replaceEOL(char *str) //Vymení koniec riadka za koniec reťazca
 {
 	unsigned int i;
 
@@ -313,40 +311,40 @@ int main()
 	int fieldSize = 0;
 	char cmd;
 
-while((cmd = getchar()) != 'k')
+while((cmd = getchar()) != 'k') //Číta zo štandardného vstupu po písmenách kým nenačíta K
         {
-                switch(cmd)
-                {
-                        case 'v':
-                                getchar();
-                                fr = funkciaV(fr);
-                                break;
-                        case 'c':
-                                getchar();
-                                funkciaC(fr);
-                                break;
-                        case 'e':
-                                getchar();
-                                fieldSize = funkciaE(fr, &field);
-                                break;
-                        case 'r':
-                                getchar();
-                                funkciaR(field, fieldSize);
-                                break;
-                        case 'h':
-                                getchar();
-                                funkciaH(field, fieldSize);
-                                break;
-                        case 's':
-                                getchar();
-                                funkciaS(fr);
-                                break;
+              switch(cmd) //Porovnáva načítané písmeno
+              {
+                      case 'v':
+                              getchar();
+                              fr = funkciaV(fr);
+                              break;
+                      case 'c':
+                              getchar();
+                              funkciaC(fr);
+                              break;
+                      case 'e':
+                              getchar();
+                              fieldSize = funkciaE(fr, &field);
+                              break;
+                      case 'r':
+                              getchar();
+                              funkciaR(field, fieldSize);
+                              break;
+                      case 'h':
+                              getchar();
+                              funkciaH(field, fieldSize);
+                              break;
+                      case 's':
+                              getchar();
+                              funkciaS(fr);
+                              break;
                 }
 
             }
 
-	if(fr != NULL)
-		closeFile(fr);
+  if(fr != NULL) //Ak bol súbor otvorený
+    closeFile(fr); //Zatvorí ho
 
-	return 1;
+  return 1;
 }
