@@ -4,348 +4,347 @@
 
 FILE *openFile(FILE *fr)
 {
-if((fr = fopen("podujatia.txt", "r")) == NULL) //Ak súbor existuje tak ho otvorí
-{
-printf("Neotvoreny subor\n"); //Inak vypíše chybnú správu
-return NULL; 
-}
-return fr; //Inak vráti pointer na súbor
+  if((fr = fopen("podujatia.txt", "r")) == NULL) //Ak súbor existuje tak ho otvorí
+  {
+      printf("Neotvoreny subor\n"); //Inak vypíše chybnú správu
+      return NULL; 
+   }
+   return fr; //Inak vráti pointer na súbor
 }
 
 void closeFile(FILE *fr)
 {
-if(fclose(fr) == EOF) //Ak sa súbor nezatvoril správne
-{
-printf("Nezatvoreny subor\n"); //Vypíše chybovú hlášku
-exit(1); //Ukonèí program
-}
+  if(fclose(fr) == EOF) //Ak sa súbor nezatvoril správne
+  {
+    printf("Nezatvoreny subor\n"); //Vypíše chybovú hlášku
+    exit(1); //Ukonèí program
+  }
 }
 
 int getRecordsNumber(FILE *fr) //Zistí počet záznamov
 {
-char pom[32];
-int count = 0;
+	char pom[32];
+	int count = 0;
 
-while((fgets(pom, 32, fr)) != NULL) //Číta riadky zo súboru po jednom
-{
-count++; //Pripočíta
-}
+  while((fgets(pom, 32, fr)) != NULL) //Číta riadky zo súboru po jednom
+  {
+    count++; //Pripočíta
+  }
 
-rewind(fr); //Pretočí súbor na začiatok
+  rewind(fr); //Pretočí súbor na začiatok
 
-return ++count / 7; //Pripočíta 1 aby zarátal posledný riadok a vráti počet záznamov (jeden záznam má 7 riadkov)
+  return ++count / 7; //Pripočíta 1 aby zarátal posledný riadok a vráti počet záznamov (jeden záznam má 7 riadkov)
 }
 
 int getNumberLength(int num) //Zistí dĺžku čísla
 {
-int count = 0;
+	int count = 0;
 
-while(num > 0) //Kým je číslo väčšie ako 0
-{
-num /= 10; //Vydelí 10 a tým pádom odstráni posledný rád
-count++; //Pripočíta
-}
-
-return count;
+  while(num > 0) //Kým je číslo väčšie ako 0
+  {
+    num /= 10; //Vydelí 10 a tým pádom odstráni posledný rád
+    count++; //Pripočíta
+  }
+	return count;
 }
 
 int getVowelCount(char *str) //Zistí počet samohlások
 {
-unsigned int i, count = 0;
-
-for(i = 0; i < strlen(str); i++) //Prechádza reťazec
-{
-//Každý znak porovná či je to samohláska
-if(str[i] == 'a' || str[i] == 'e' || str[i] == 'i' || str[i] == 'o' || str[i] == 'u' || str[i] == 'y' || str[i] == 'A' || str[i] == 'E' || str[i] == 'I' || str[i] == 'O' || str[i] == 'U' || str[i] == 'Y')
-count++;
-}
-
-return count;
+	unsigned int i, count = 0;
+  
+  for(i = 0; i < strlen(str); i++) //Prechádza reťazec
+  {
+  //Každý znak porovná či je to samohláska
+  if(str[i] == 'a' || str[i] == 'e' || str[i] == 'i' || str[i] == 'o' || str[i] == 'u' || str[i] == 'y' || str[i] == 'A' || str[i] == 'E' || str[i] == 'I' || str[i] == 'O' || str[i] == 'U' || str[i] == 'Y')
+    count++;
+  }
+	return count;
 }
 
 void replaceEOL(char *str) //Vymení koniec riadka za koniec reťazca
 {
-unsigned int i;
+	unsigned int i;
 
-for(i = 0; i < strlen(str); i++)
-{
-if(str[i] == '\n')
-{
-str[i] = '\0';
-break;
-}
-}
+	for(i = 0; i < strlen(str); i++)
+	{
+		if(str[i] == '\n')
+		{
+			str[i] = '\0';
+			break;
+		}
+	}
 }
 
 FILE *funkciaV(FILE *fr)
 {
-char nazov[32], organizator[32];
-int deti, datum;
-float cena, cas;
+	char nazov[32], organizator[32];
+	int deti, datum;
+	float cena, cas;
 
-if(fr == NULL)
-{
-if((fr = openFile(fr)) == NULL)
-{
-return NULL;
-}
-}
+	if(fr == NULL)
+	{
+		if((fr = openFile(fr)) == NULL)
+		{
+			return NULL;
+		}
+	}
 
-while((fgets(nazov, 32, fr)) != NULL)
-{
-fgets(organizator, 32, fr);
-fscanf(fr, "%d\n", &deti);
-fscanf(fr, "%g\n", &cena);
-fscanf(fr, "%d\n", &datum);
-fscanf(fr, "%g\n", &cas);
+	while((fgets(nazov, 32, fr)) != NULL)
+	{
+		fgets(organizator, 32, fr);
+		fscanf(fr, "%d\n", &deti);
+		fscanf(fr, "%g\n", &cena);
+		fscanf(fr, "%d\n", &datum);
+		fscanf(fr, "%g\n", &cas);
 
-printf("nazov: %s", nazov);
-printf("organizator: %s", organizator);
-printf("pre deti: %d\n", deti);
-printf("cena: %.2f\n", cena);
-printf("datum: %08d\n", datum);
-printf("cas: %.2f\n\n", cas);
-}
 
-rewind(fr);
+		printf("nazov: %s", nazov);
+		printf("organizator: %s", organizator);
+		printf("pre deti: %d\n", deti);
+		printf("cena: %.2f\n", cena);
+		printf("datum: %08d\n", datum);
+		printf("cas: %.2f\n\n", cas);
+	}
 
-return fr;
+	rewind(fr);
+
+	return fr;
 }
 
 void funkciaC(FILE *fr)
 {
-char pom[32];
-int deti, rok, maxrok = 0;
-float cas, maxcas = 0.0;
+	char pom[32];
+	int deti, rok, maxrok = 0;
+	float cas, maxcas = 0.0;
 
-if(fr == NULL)
-{
-return;
-}
+	if(fr == NULL)
+	{
+		return;
+	}
 
 
-while((fgets(pom, 32, fr)) != NULL)
-{
-fgets(pom, 32, fr);
-fscanf(fr, "%d\n", &deti);
-fgets(pom, 32, fr);
-fscanf(fr, "%d\n", &rok);
-fscanf(fr, "%g\n", &cas);
+	while((fgets(pom, 32, fr)) != NULL)
+	{
+		fgets(pom, 32, fr);
+		fscanf(fr, "%d\n", &deti);
+		fgets(pom, 32, fr);
+		fscanf(fr, "%d\n", &rok);
+		fscanf(fr, "%g\n", &cas);
 
-if(deti)
-{
-rok %= 10000;
+		if(deti)
+		{
+			rok %= 10000;
 
-if(rok > maxrok)
-{
-maxrok = rok;
-maxcas = cas;
-}
-else if(rok == maxrok && cas > maxcas)
-{
-maxcas = cas;
-}
-}
-}
+			if(rok > maxrok)
+			{
+				maxrok = rok;
+				maxcas = cas;
+			}
+			else if(rok == maxrok && cas > maxcas)
+			{
+				maxcas = cas;
+			}
+		}
+	}
 
-if(maxrok != 0)
-printf("%.2f\n", maxcas);
+    if(maxrok != 0)
+        printf("%.2f\n", maxcas);
 
-rewind(fr);
+	rewind(fr);
 }
 
 int funkciaE(FILE *fr, float **field)
 {
-char pom[32];
-int count = 0, i = 0;
-float cena, *tempField;
+	char pom[32];
+	int count = 0, i = 0;
+	float cena, *tempField;
 
-if(fr == NULL)
-{
-return 0;
-}
+	if(fr == NULL)
+	{
+		return 0;
+	}
 
-if(*field != NULL)
-{
-free(*field);
-}
+	if(*field != NULL)
+	{
+		free(*field);
+	}
 
-tempField = (float*) malloc(getRecordsNumber(fr) * sizeof(float));
+	tempField = (float*) malloc(getRecordsNumber(fr) * sizeof(float));
 
-while((fgets(pom, 32, fr)) != NULL)
-{
-if(i % 7 == 2)
-{
-fscanf(fr, "%g\n", &cena);
-tempField[count] = cena;
-count++, i++;
-}
+	while((fgets(pom, 32, fr)) != NULL)
+	{
+		if(i % 7 == 2)
+		{
+			fscanf(fr, "%g\n", &cena);
+			tempField[count] = cena;
+			count++, i++;
+		}
 
-i++;
-}
+		i++;
+	}
 
-rewind(fr);
+	rewind(fr);
 
-*field = tempField;
+	*field = tempField;
 
-return count;
+	return count;
 }
 
 void funkciaR(float *field, int fieldSize)
 {
-int i, j, len, maxLen = 0;
+	int i, j, len, maxLen = 0;
 
-if(field == NULL)
-{
-printf("Pole nieje vytvorene\n");
-return;
-}
+	if(field == NULL)
+	{
+		printf("Pole nieje vytvorene\n");
+		return;
+	}
 
-for(i = 0; i < fieldSize; i++)
-{
-if(maxLen < getNumberLength((int)field[i]))
-maxLen = getNumberLength((int)field[i]);
-}
+	for(i = 0; i < fieldSize; i++)
+	{
+		if(maxLen < getNumberLength((int)field[i]))
+			maxLen = getNumberLength((int)field[i]);
+	}
 
-for(i = 0; i < fieldSize; i++)
-{
-len = getNumberLength((int)field[i]);
+	for(i = 0; i < fieldSize; i++)
+	{
+		len = getNumberLength((int)field[i]);
 
-if(len < maxLen)
-{
-for(j = 0; j < maxLen - len; j++)
-{
-putchar(' ');
-}
-}
+		if(len < maxLen)
+		{
+			for(j = 0; j < maxLen - len; j++)
+			{
+				putchar(' ');
+			}
+		}
 
-printf("%.2f\n", field[i]);
-}
+		printf("%.2f\n", field[i]);
+	}
 }
 
 void funkciaH(float *field, int fieldSize)
 {
-int i, temp, histogram[10];
+	int i, temp, histogram[10];
 
-if(field == NULL)
-{
-printf("Pole nieje vytvorene\n");
-return;
-}
+	if(field == NULL)
+	{
+		printf("Pole nieje vytvorene\n");
+		return;
+	}
 
-for(i = 0; i < 10; i++)
-histogram[i] = 0;
-}
+	for(i = 0; i < 10; i++)
+		histogram[i] = 0;
+	}
 
-for(i = 0; i < fieldSize; i++)
-{
-temp = (int) field[i];
-while(temp > 0)
-{
-histogram[temp % 10]++;
-temp /= 10;
-}
-}
+	for(i = 0; i < fieldSize; i++)
+	{
+		temp = (int) field[i];
+		while(temp > 0)
+		{
+			histogram[temp % 10]++;
+			temp /= 10;
+		}
+	}
 
-for(i = 9; i >= 0; i--)
-{
-printf("%d:%d\n", i, histogram[i]);
-}
+	for(i = 9; i >= 0; i--)
+	{
+		printf("%d:%d\n", i, histogram[i]);
+	}
 }
 
 void funkciaS(FILE *fr)
 {
-char pom[32], res[3][32];
-int i = 0;
+	char pom[32], res[3][32];
+	int i = 0;
 
-if(fr == NULL)
-{
-return;
-}
+	if(fr == NULL)
+	{
+		return;
+	}
 
-strcpy(res[0], "");
-strcpy(res[1], "");
-strcpy(res[2], "");
+	strcpy(res[0], "");
+	strcpy(res[1], "");
+	strcpy(res[2], "");
 
-while((fgets(pom, 32, fr)) != NULL)
-{
-if(i % 7 == 0)
-{
-fgets(pom, 32, fr);
+	while((fgets(pom, 32, fr)) != NULL)
+	{
+		if(i % 7 == 0)
+		{
+			fgets(pom, 32, fr);
 
-replaceEOL(pom);
+			replaceEOL(pom);
 
-if(getVowelCount(pom) > getVowelCount(res[0]))
-{
-strcpy(res[2], res[1]);
-strcpy(res[1], res[0]);
-strcpy(res[0], pom);
-}
-else if(getVowelCount(pom) > getVowelCount(res[1]))
-{
-strcpy(res[2], res[1]);
-strcpy(res[1], pom);
-}
-else if(getVowelCount(pom) > getVowelCount(res[2]))
-{
-strcpy(res[2], pom);
-}
+			if(getVowelCount(pom) > getVowelCount(res[0]))
+			{
+				strcpy(res[2], res[1]);
+				strcpy(res[1], res[0]);
+				strcpy(res[0], pom);
+			}
+			else if(getVowelCount(pom) > getVowelCount(res[1]))
+			{
+				strcpy(res[2], res[1]);
+				strcpy(res[1], pom);
+			}
+			else if(getVowelCount(pom) > getVowelCount(res[2]))
+			{
+				strcpy(res[2], pom);
+			}
 
-i++;
-}
+			i++;
+		}
 
-i++;
-}
+		i++;
+	}
 
-rewind(fr);
+	rewind(fr);
 
-for(i = 2; i >= 0; i--)
-{
-if(strlen(res[i]) != 0)
-printf("%s:%d\n", res[i], getVowelCount(res[i]));
-}
+	for(i = 2; i >= 0; i--)
+	{
+		if(strlen(res[i]) != 0)
+			printf("%s:%d\n", res[i], getVowelCount(res[i]));
+	}
 }
 int main()
 {
-FILE *fr = NULL;
-float *field = NULL;
-int fieldSize = 0;
-char cmd;
+	FILE *fr = NULL;
+	float *field = NULL;
+	int fieldSize = 0;
+	char cmd;
 
 while((cmd = getchar()) != 'k') //Číta zo štandardného vstupu po písmenách kým nenačíta K
-{
-switch(cmd) //Porovnáva načítané písmeno
-{
-case 'v':
-getchar();
-fr = funkciaV(fr);
-break;
-case 'c':
-getchar();
-funkciaC(fr);
-break;
-case 'e':
-getchar();
-fieldSize = funkciaE(fr, &field);
-break;
-case 'r':
-getchar();
-funkciaR(field, fieldSize);
-break;
-case 'h':
-getchar();
-funkciaH(field, fieldSize);
-break;
-case 's':
-getchar();
-funkciaS(fr);
-break;
-}
+        {
+              switch(cmd) //Porovnáva načítané písmeno
+              {
+                      case 'v':
+                              getchar();
+                              fr = funkciaV(fr);
+                              break;
+                      case 'c':
+                              getchar();
+                              funkciaC(fr);
+                              break;
+                      case 'e':
+                              getchar();
+                              fieldSize = funkciaE(fr, &field);
+                              break;
+                      case 'r':
+                              getchar();
+                              funkciaR(field, fieldSize);
+                              break;
+                      case 'h':
+                              getchar();
+                              funkciaH(field, fieldSize);
+                              break;
+                      case 's':
+                              getchar();
+                              funkciaS(fr);
+                              break;
+                }
 
-}
+            }
 
-if(fr != NULL) //Ak bol súbor otvorený
-closeFile(fr); //Zatvorí ho
+  if(fr != NULL) //Ak bol súbor otvorený
+    closeFile(fr); //Zatvorí ho
 
-return 1;
+  return 1;
 }
