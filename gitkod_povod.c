@@ -256,97 +256,97 @@ void funkciaH(float *field, int fieldSize)
 
 void funkciaS(FILE *fr)
 {
-char pom[32], res[3][32];
-int i = 0;
+	char pom[32], res[3][32];
+	int i = 0;
 
-if(fr == NULL)
-{
-return;
-}
+	if(fr == NULL)
+	{
+		return;
+	}
 
-strcpy(res[0], "");
-strcpy(res[1], "");
-strcpy(res[2], "");
+	strcpy(res[0], "");
+	strcpy(res[1], "");
+	strcpy(res[2], "");
 
-while((fgets(pom, 32, fr)) != NULL)
-{
-if(i % 7 == 0)
-{
-fgets(pom, 32, fr);
+	while((fgets(pom, 32, fr)) != NULL)
+	{
+		if(i % 7 == 0)
+		{
+			fgets(pom, 32, fr);
 
-replaceEOL(pom);
+			replaceEOL(pom);
 
-if(getVowelCount(pom) > getVowelCount(res[0]))
-{
-strcpy(res[2], res[1]);
-strcpy(res[1], res[0]);
-strcpy(res[0], pom);
-}
-else if(getVowelCount(pom) > getVowelCount(res[1]))
-{
-strcpy(res[2], res[1]);
-strcpy(res[1], pom);
-}
-else if(getVowelCount(pom) > getVowelCount(res[2]))
-{
-strcpy(res[2], pom);
-}
+			if(getVowelCount(pom) > getVowelCount(res[0]))
+			{
+				strcpy(res[2], res[1]);
+				strcpy(res[1], res[0]);
+				strcpy(res[0], pom);
+			}
+			else if(getVowelCount(pom) > getVowelCount(res[1]))
+			{
+				strcpy(res[2], res[1]);
+				strcpy(res[1], pom);
+			}
+			else if(getVowelCount(pom) > getVowelCount(res[2]))
+			{
+				strcpy(res[2], pom);
+			}
 
-i++;
-}
+			i++;
+		}
 
-i++;
-}
+		i++;
+	}
 
-rewind(fr);
+	rewind(fr);
 
-for(i = 2; i >= 0; i--)
-{
-if(strlen(res[i]) != 0)
-printf("%s:%d\n", res[i], getVowelCount(res[i]));
-}
+	for(i = 2; i >= 0; i--)
+	{
+		if(strlen(res[i]) != 0)
+			printf("%s:%d\n", res[i], getVowelCount(res[i]));
+	}
 }
 int main()
 {
-FILE *fr = NULL;
-float *field = NULL;
-int fieldSize = 0;
-char cmd;
+	FILE *fr = NULL;
+	float *field = NULL;
+	int fieldSize = 0;
+	char cmd;
 
 while((cmd = getchar()) != 'k')
-{
-switch(cmd)
-{
-case 'v':
-getchar();
-fr = funkciaV(fr);
-break;
-case 'c':
-getchar();
-funkciaC(fr);
-break;
-case 'e':
-getchar();
-fieldSize = funkciaE(fr, &field);
-break;
-case 'r':
-getchar();
-funkciaR(field, fieldSize);
-break;
-case 'h':
-getchar();
-funkciaH(field, fieldSize);
-break;
-case 's':
-getchar();
-funkciaS(fr);
-break;
-}
+        {
+                switch(cmd)
+                {
+                        case 'v':
+                                getchar();
+                                fr = funkciaV(fr);
+                                break;
+                        case 'c':
+                                getchar();
+                                funkciaC(fr);
+                                break;
+                        case 'e':
+                                getchar();
+                                fieldSize = funkciaE(fr, &field);
+                                break;
+                        case 'r':
+                                getchar();
+                                funkciaR(field, fieldSize);
+                                break;
+                        case 'h':
+                                getchar();
+                                funkciaH(field, fieldSize);
+                                break;
+                        case 's':
+                                getchar();
+                                funkciaS(fr);
+                                break;
+                }
 
-}
+            }
 
-if(fr != NULL)
-closeFile(fr);
+	if(fr != NULL)
+		closeFile(fr);
 
-return 1;
+	return 1;
 }
