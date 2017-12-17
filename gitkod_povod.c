@@ -157,101 +157,101 @@ void funkciaC(FILE *fr)
 
 int funkciaE(FILE *fr, float **field)
 {
-char pom[32];
-int count = 0, i = 0;
-float cena, *tempField;
+	char pom[32];
+	int count = 0, i = 0;
+	float cena, *tempField;
 
-if(fr == NULL)
-{
-return 0;
-}
+	if(fr == NULL)
+	{
+		return 0;
+	}
 
-if(*field != NULL)
-{
-free(*field);
-}
+	if(*field != NULL)
+	{
+		free(*field);
+	}
 
-tempField = (float*) malloc(getRecordsNumber(fr) * sizeof(float));
+	tempField = (float*) malloc(getRecordsNumber(fr) * sizeof(float));
 
-while((fgets(pom, 32, fr)) != NULL)
-{
-if(i % 7 == 2)
-{
-fscanf(fr, "%g\n", &cena);
-tempField[count] = cena;
-count++, i++;
-}
+	while((fgets(pom, 32, fr)) != NULL)
+	{
+		if(i % 7 == 2)
+		{
+			fscanf(fr, "%g\n", &cena);
+			tempField[count] = cena;
+			count++, i++;
+		}
 
-i++;
-}
+		i++;
+	}
 
-rewind(fr);
+	rewind(fr);
 
-*field = tempField;
+	*field = tempField;
 
-return count;
+	return count;
 }
 
 void funkciaR(float *field, int fieldSize)
 {
-int i, j, len, maxLen = 0;
+	int i, j, len, maxLen = 0;
 
-if(field == NULL)
-{
-printf("Pole nieje vytvorene\n");
-return;
-}
+	if(field == NULL)
+	{
+		printf("Pole nieje vytvorene\n");
+		return;
+	}
 
-for(i = 0; i < fieldSize; i++)
-{
-if(maxLen < getNumberLength((int)field[i]))
-maxLen = getNumberLength((int)field[i]);
-}
+	for(i = 0; i < fieldSize; i++)
+	{
+		if(maxLen < getNumberLength((int)field[i]))
+			maxLen = getNumberLength((int)field[i]);
+	}
 
-for(i = 0; i < fieldSize; i++)
-{
-len = getNumberLength((int)field[i]);
+	for(i = 0; i < fieldSize; i++)
+	{
+		len = getNumberLength((int)field[i]);
 
-if(len < maxLen)
-{
-for(j = 0; j < maxLen - len; j++)
-{
-putchar(' ');
-}
-}
+		if(len < maxLen)
+		{
+			for(j = 0; j < maxLen - len; j++)
+			{
+				putchar(' ');
+			}
+		}
 
-printf("%.2f\n", field[i]);
-}
+		printf("%.2f\n", field[i]);
+	}
 }
 
 void funkciaH(float *field, int fieldSize)
 {
-int i, temp, histogram[10];
+	int i, temp, histogram[10];
 
-if(field == NULL)
-{
-printf("Pole nieje vytvorene\n");
-return;
-}
+	if(field == NULL)
+	{
+		printf("Pole nieje vytvorene\n");
+		return;
+	}
 
-for(i = 0; i < 10; i++)
-histogram[i] = 0;
-}
+	for(i = 0; i < 10; i++)
+		histogram[i] = 0;
+	}
 
-for(i = 0; i < fieldSize; i++)
-{
-temp = (int) field[i];
-while(temp > 0)
-{
-histogram[temp % 10]++;
-temp /= 10;
-}
-}
+	for(i = 0; i < fieldSize; i++)
+	{
+		temp = (int) field[i];
+		while(temp > 0)
+		{
+			histogram[temp % 10]++;
+			temp /= 10;
+		}
+	}
 
-for(i = 9; i >= 0; i--)
-{
-printf("%d:%d\n", i, histogram[i]);
-}
+	for(i = 9; i >= 0; i--)
+	{
+		printf("%d:%d\n", i, histogram[i]);
+	}
 }
 
 void funkciaS(FILE *fr)
