@@ -4,63 +4,63 @@
 
 FILE *openFile(FILE *fr)
 {
-if((fr = fopen("podujatia.txt", "r")) == NULL)
-{
-printf("Neotvoreny subor\n");
-return NULL;
-}
-return fr;
+	if((fr = fopen("podujatia.txt", "r")) == NULL)
+	{
+		printf("Neotvoreny subor\n");
+		return NULL;
+	}
+	return fr;
 }
 
 void closeFile(FILE *fr)
 {
-if(fclose(fr) == EOF)
-{
-printf("Nezatvoreny subor\n");
-exit(1);
-}
+	if(fclose(fr) == EOF)
+	{
+		printf("Nezatvoreny subor\n");
+		exit(1);
+	}
 }
 
 int getRecordsNumber(FILE *fr)
 {
-char pom[32];
-int count = 0;
+	char pom[32];
+	int count = 0;
 
-while((fgets(pom, 32, fr)) != NULL)
-{
-count++;
-}
+	while((fgets(pom, 32, fr)) != NULL)
+	{
+		count++;
+	}
 
-rewind(fr);
+	rewind(fr);
 
-return ++count / 7;
+	return ++count / 7;
 }
 
 int getNumberLength(int num)
 {
-int count = 0;
+	int count = 0;
 
-while(num > 0)
-{
-num /= 10;
-count++;
-}
+	while(num > 0)
+	{
+		num /= 10;
+		count++;
+	}
 
-return count;
+	return count;
 }
 
 int getVowelCount(char *str)
 {
-unsigned int i, count = 0;
+	unsigned int i, count = 0;
 
-for(i = 0; i < strlen(str); i++)
-{
+	for(i = 0; i < strlen(str); i++)
+	{
 
-if(str[i] == 'a' || str[i] == 'e' || str[i] == 'i' || str[i] == 'o' || str[i] == 'u' || str[i] == 'y' || str[i] == 'A' || str[i] == 'E' || str[i] == 'I' || str[i] == 'O' || str[i] == 'U' || str[i] == 'Y')
-count++;
-}
+		if(str[i] == 'a' || str[i] == 'e' || str[i] == 'i' || str[i] == 'o' || str[i] == 'u' || str[i] == 'y' || str[i] == 'A' || str[i] == 'E' || str[i] == 'I' || str[i] == 'O' || str[i] == 'U' || str[i] == 'Y')
+			count++;
+	}
 
-return count;
+	return count;
 }
 
 void replaceEOL(char *str)
